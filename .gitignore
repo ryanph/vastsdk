@@ -1,0 +1,8 @@
+node_modules
+build
+.DS_Store
+examples/python/bin
+examples/python/include
+examples/python/lib
+examples/python/pyvenv.cfg
+examples/python/__pycache__

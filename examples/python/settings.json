@@ -1,0 +1,29 @@
+{
+    "vms_url": "https://vast.local/",
+    "vms_username": "admin",
+    "vms_password": "123456",
+    "verify_ssl": false,
+    "test_user_data": {
+        "name": "openapi_test_user",
+        "uid": 1999,
+        "patch_uid": 1998
+    },
+    "test_viewpolicy_data": {
+        "name": "openapi_test_viewpolicy",
+        "flavor": "S3_NATIVE",
+        "patch_flavor": "NFS",
+        "auth_source": "PROVIDERS"
+
+    },
+    "test_view_data": {
+        "name": "openapi_test_view",
+        "path": "/openapi_test_view",
+        "allowed_characters": "NPL",
+        "path_length": "NPL",
+        "policy_id": 1,
+        "create_dir": true,
+        "protocols": ["NFS"],
+        "patch_protocols": ["NFS", "NFS4"],
+        "patch_smb_share_name": "openapi_test_view"
+    }
+}

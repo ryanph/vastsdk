@@ -1,0 +1,643 @@
+openapi: 3.1.0
+info:
+  description: 'VAST Management Service (VMS) API - https://vastdata.com'
+  version: 1.0.0
+  title: VMS
+  contact:
+    email: "support@vastdata.com"
+    
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Token
+    description: Authentication and Token Management
+  - name: Views
+    description: View Management
+  - name: ViewPolicies
+    description: View Policy Management
+  - name: Users
+    description: User Management
+    
+externalDocs:
+  description: Find out more about Swagger
+  url: https://support.vastdata.com/hc/en-us/articles/5594954910108-The-VAST-REST-API
+servers:
+  - url: https://vast.local
+    
+paths:
+
+  /api/token/:
+    post:
+      tags:
+      - Token
+      operationId: createTokens
+      description: Create a token for API authentication
+      summary: Create a token for API authentication
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  example: "admin"
+                  description: "VMS Administrator Username"
+                  type: string
+                password:
+                  example: "123456"
+                  description: "VMS Administrator Password"
+                  type: string
+              required:
+              - username
+              - password
+              type: object
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Token"
+          description: Access and Refresh Tokens Created
+
+  /api/users/:
+    post:
+      tags:
+        - Users
+      summary: Create a User
+      description: Create a User
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        "201":
+          description: "User Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    get:
+      tags:
+        - Users
+      summary: List Users
+      description: List available Users
+      operationId: listUsers
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+        - in: query
+          name: uid
+          schema:
+            type: number
+      responses:
+        "200":
+          description: "Users Returned"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+  /api/users/{id}/:
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the User
+      tags:
+        - Users
+      summary: Delete a User
+      description: Delete User
+      operationId: deleteUserById
+      responses:
+        "201":
+          description: "User Deleted"
+          
+    patch:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      tags:
+        - Users
+      summary: Delete a User
+      description: Delete User
+      operationId: updateUserById
+      responses:
+        "200":
+          description: "User Updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /api/users/{id}/access_keys/:
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the User
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                "access_key":
+                  type: string
+              required:
+                - "access_key"
+      summary: Delete an S3 Access Key for a User
+      description: Delete an S3 Access Key for a User
+      operationId: deleteUserAccessKeyById
+      responses:
+        "200":
+          description: "Access Key Deleted"
+    post:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the User
+      tags:
+        - Users
+      summary: Create an S3 Access Key for a User
+      description: Create an S3 Access Key for a User
+      operationId: createUserAccessKeyById
+      responses:
+        "200":
+          description: "Access Key Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/S3AccessKey"
+
+  /api/views/:
+    get:
+      tags:
+        - Views
+      summary: List Views
+      description: List Views
+      operationId: listViews
+      responses:
+        "200":
+          description: "Views Returned" 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/View"
+    post:
+      tags:
+        - Views
+      summary: Create a View
+      description: Create a View
+      operationId: createView
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/View"
+      responses:
+        "201":
+          description: "View Created" 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/View"
+
+  /api/views/{id}/:
+    patch:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the View
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/View"
+      operationId: updateViewById
+      tags:
+        - Views
+      summary: Update a View
+      description: Update a View
+      responses:
+        "200":
+          description: "View Deleted"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/View"
+
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the View
+      operationId: deleteViewById
+      tags:
+        - Views
+      summary: Delete a View
+      description: Delete a View
+      responses:
+        "204":
+          description: "View Deleted"
+
+  /api/viewpolicies/:
+    post:
+      tags:
+        - ViewPolicies
+      summary: Create a View Policiy
+      description: Create a View Policy
+      operationId: createViewpolicy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ViewPolicy"
+      responses:
+        "201":
+          description: "View Policy Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ViewPolicy"
+                
+    get:
+      tags:
+        - ViewPolicies
+      summary: List View Policies
+      description: List configured View Policies
+      operationId: getViewpolicies
+      responses:
+        "200":
+          description: "View Policies Returned" 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ViewPolicy"
+
+
+  /api/viewpolicies/{id}/:
+    patch:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the View Policy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ViewPolicy"
+      tags:
+        - ViewPolicies
+      summary: Update a View Policy
+      description: Create View Policies
+      operationId: updateViewpolicyById
+      responses:
+        "200":
+          description: "View Policy Updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ViewPolicy"
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the View Policy
+      tags:
+        - ViewPolicies
+      summary: Delete a View Policy
+      description: Delete a View Policy
+      operationId: deleteViewpolicyById
+      responses:
+        "204":
+          description: "View Policy Deleted"
+
+components:
+  schemas:
+  
+    Token:
+      type: object
+      properties:
+        "access":
+          type: string
+        "refresh":
+          type: string
+
+    View:
+      type: object
+      properties:
+        "id":
+          type: number
+        "guid":
+          type: string
+        "name":
+          type: string
+        "url":
+          type: string
+        "title":
+          type: string
+        "alias":
+          type: string
+        "allow_anonymous_access":
+          type: boolean
+        "allow_s3_anonymous_access":
+          type: boolean
+        "bucket":
+          type: string
+        "bucket_creators":
+          type: array
+          items:
+            type: string
+        "bucket_creators_groups":
+          type: array
+          items:
+            type: string
+        "bucket_owner":
+          type: string
+        "cluster":
+          type: string
+        "cluster_id":
+          type: number
+        "ignore_oos":
+          type: boolean
+        "internal":
+          type: boolean
+        "logical_capacity":
+          type: number
+        "nfs_interop_flags":
+          type: string
+        "path":
+          type: string
+        "physical_capacity":
+          type: number
+        "policy":
+          type: string
+        "policy_id":
+          type: number
+        "protocols":
+          type: array
+          items:
+            type: string
+        "s3_locks":
+          type: boolean
+        "s3_locks_retention_mode":
+          type: string
+        "s3_locks_retention_period":
+          type: string
+        "s3_unverified_lookup":
+          type: boolean
+        "s3_versioning":
+          type: boolean
+        "share":
+          type: string
+        "sync":
+          type: string
+        "sync_time":
+          type: string
+        "tenant_id":
+          type: number
+        "create_dir":
+          type: boolean
+          
+    ViewPolicy:
+      type: object
+      properties:
+        "id":
+          type: number
+        "name":
+          type: string
+        "atime_frequency":
+          type:
+            - string
+            - null
+        "smb_file_mode":
+          type: number
+        "smb_directory_mode":
+          type: number
+        "use_auth_provider":
+          type: boolean
+        "auth_source":
+          type: string
+        "nfs_return_open_permissions":
+          type: boolean
+        "nfs_posix_acl":
+          type: boolean
+        "nfs_no_squash":
+          type: array
+          items:
+            type: string
+        "nfs_root_squash":
+          type: array
+          items:
+            type: string
+        "nfs_all_squash":
+          type: array
+          items:
+            type: string
+        "smb_read_write":
+          type: array
+          items:
+            type: string
+        "smb_read_only":
+          type: array
+          items:
+            type: string
+        "s3_read_write":
+          type: array
+          items:
+            type: string
+        "s3_read_only":
+          type: array
+          items:
+            type: string
+        "trash_access":
+          type: array
+          items:
+            type: string
+        "read":
+          type: array
+          items:
+            type: string
+        "change":
+          type: array
+          items:
+            type: string
+        "full":
+          type: array
+          items:
+            type: string
+        "gid_inheritance":
+          type: string
+        "flavor":
+          type: string
+        "path_length":
+          type: string
+        "access_flavor":
+          type: string
+        "allowed_characters":
+          type: string
+        "use_32bit_fileid":
+          type: boolean
+        "vip_pools":
+          type: array
+          items:
+            type: string
+        "s3_visibility":
+          type: array
+          items:
+            type: string
+        "s3_visibility_groups":
+          type: array
+          items:
+            type: string
+        "protocols_audit":
+          $ref: "#/components/schemas/ProtocolAuditSettings"
+        "protocols":
+          type: array
+          items:
+            type: string
+        "enable_snapshot_lookup":
+          type: boolean
+        "enable_listing_of_snapshot_dir":
+          type: boolean
+    
+    ProtocolAuditSettings:
+      type: object
+      properties:
+        "log_full_path":
+          type: boolean
+        "log_username":
+          type: boolean
+        "create_delete_files_dirs_objects":
+          type: boolean
+        "modify_data_md":
+          type: boolean
+        "read_data":
+          type: boolean
+    
+    S3AccessKey:
+      type: object
+      properties:
+        "access_key":
+          type: string
+        "secret_key":
+          type: string
+    
+    NewUser:
+      type: object
+      properties:
+        "name":
+          type: string
+        "uid":
+          type: number
+        "sid":
+          type: string
+        "allow_create_bucket":
+          type: boolean
+        "vid":
+          type: number
+        "allow_delete_bucket":
+          type: boolean
+        "s3_superuser":
+          type: boolean
+    
+    User:
+      type: object
+      properties:
+        "id":
+          type: number
+        "uid":
+          type: number
+        "sid":
+          type: string
+        "leading_group_name":
+          type: string
+        "leading_group_gid":
+          type: number
+        "primary_group_name":
+          type: string
+        "primary_group_sid":
+          type: string
+        "name":
+          type: string
+        "login_name":
+          type: string
+        "groups":
+          type: array
+          items:
+            type: "string"
+        "group_count":
+          type: number
+        "allow_create_bucket":
+          type: boolean
+        "allow_delete_bucket":
+          type: boolean
+        "s3_superuser":
+          type: boolean
+        "origins":
+          type: object
+          properties:
+            "uid":
+              type: string
+            "leading_group":
+              type: string
+            "primary_group_sid":
+              type: string
+            "name":
+              type: string
+            "sid":
+              type: string
+        "access_keys":
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+          
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http

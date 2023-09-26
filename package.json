@@ -1,0 +1,19 @@
+{
+  "name": "vastsdk",
+  "version": "1.0.0",
+  "description": "VAST Management Service (VMS) SDK - https://vastdata.com",
+  "scripts": {
+    "build-python": "npx @openapitools/openapi-generator-cli generate -i spec.yml -g python -o build/python/${npm_package_name} --additional-properties=\"packageVersion=${npm_package_version},packageName=${npm_package_name},projectName=${npm_package_name}\" && tar -czf build/${npm_package_name}-python-${npm_package_version}.tgz -C build/python/${npm_package_name} .",
+    "build-php": "npx @openapitools/openapi-generator-cli generate -i spec.yml -g php -o build/php/openapi-vast-client --additional-properties=\"packageVersion=${npm_package_version},packageName=${npm_package_name},projectName=${npm_package_name}\"",
+    "clean": "rm -rfv ./build"
+  },
+  "author": "Ryan Parker-Hill (ryanph@hoover.rocks)",
+  "license": "MIT",
+  "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanph/vastsdk"
+  }
+}
