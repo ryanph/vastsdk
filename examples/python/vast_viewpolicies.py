@@ -28,6 +28,11 @@ test_viewpolicy = vastViewPoliciesApi.create_viewpolicy({
 })
 log.debug(test_viewpolicy)
 
+log.info("Searching for View Policy {}".format(settings["test_viewpolicy_data"]["name"]))
+r = vastViewPoliciesApi.get_viewpolicies(name=settings["test_viewpolicy_data"]["name"])
+log.debug(r)
+assert len(r) == 1, "View policy search should return a single result"
+
 log.info("Updating View Policy {} (ID: {})".format(test_viewpolicy.name, test_viewpolicy.id))
 updated_viewpolicy = vastViewPoliciesApi.update_viewpolicy_by_id(id=test_viewpolicy.id,view_policy={
     "flavor": settings['test_viewpolicy_data']['patch_flavor']

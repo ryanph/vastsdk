@@ -3,10 +3,15 @@
     "vms_username": "admin",
     "vms_password": "123456",
     "verify_ssl": false,
+    "test_query_data": {
+        "username": "vastdata",
+        "groupname": "AllStaffAccounts"
+    },
     "test_user_data": {
         "name": "openapi_test_user",
         "uid": 1999,
-        "patch_uid": 1998
+        "patch_uid": 1998,
+        "sid": "S-1-5-21-248963057-614103661-3067232799-241224"
     },
     "test_viewpolicy_data": {
         "name": "openapi_test_viewpolicy",
@@ -23,7 +28,7 @@
         "policy_id": 1,
         "create_dir": true,
         "protocols": ["NFS"],
-        "patch_protocols": ["NFS", "NFS4"],
+        "patch_protocols": ["NFS", "NFSv4.1"],
         "patch_smb_share_name": "openapi_test_view"
     }
 }

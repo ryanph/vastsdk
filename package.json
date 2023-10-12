@@ -5,7 +5,8 @@
   "scripts": {
     "build-python": "npx @openapitools/openapi-generator-cli generate -i spec.yml -g python -o build/python/${npm_package_name} --additional-properties=\"packageVersion=${npm_package_version},packageName=${npm_package_name},projectName=${npm_package_name}\" && tar -czf build/${npm_package_name}-python-${npm_package_version}.tgz -C build/python/${npm_package_name} .",
     "build-php": "npx @openapitools/openapi-generator-cli generate -i spec.yml -g php -o build/php/openapi-vast-client --additional-properties=\"packageVersion=${npm_package_version},packageName=${npm_package_name},projectName=${npm_package_name}\"",
-    "clean": "rm -rfv ./build"
+    "clean": "rm -rfv ./build",
+    "all-python": "npm run clean && npm run build-python && pip3 install build/vastsdk-python-*.tgz"
   },
   "author": "Ryan Parker-Hill (ryanph@hoover.rocks)",
   "license": "MIT",

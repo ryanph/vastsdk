@@ -24,7 +24,8 @@ log.debug(new_view)
 
 log.info("Updating a View")
 updated_view = vastViewsApi.update_view_by_id(id=new_view.id, view={
-    "protocols": settings['test_view_data']['patch_protocols']
+    "protocols": settings['test_view_data']['patch_protocols'],
+    "share_acl": { "enabled": False }
 })
 log.debug(updated_view)
 
