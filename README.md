@@ -12,7 +12,7 @@ The version tag used for this project and generated libraries do not align with 
 
 ## Installing
 
-Python: `pip3 install https://github.com/ryanph/vastsdk/releases/download/v1.0.0/vastsdk-python-1.0.0.tgz`
+Python: `pip3 install https://github.com/ryanph/vastsdk/releases/download/v1.1.0/vastsdk-python-1.1.0.tgz`
 
 ## Building
 
