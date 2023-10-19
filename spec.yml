@@ -20,6 +20,8 @@ tags:
     description: User Query and Management
   - name: Groups
     description: Group Query and Management
+  - name: Quotas
+    description: Quota Management
     
 externalDocs:
   url: "https://support.vastdata.com/hc/en-us/articles/5594954910108-The-VAST-REST-API"
@@ -63,6 +65,106 @@ paths:
               schema:
                 $ref: "#/components/schemas/Token"
           description: Access and Refresh Tokens Created
+
+  /api/quotas:
+    post:
+      tags:
+        - Quotas
+      summary: Create a Quota
+      description: Create a Quota
+      operationId: createQuota
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Quota"
+      responses:
+        "201":
+          description: "Quota Created" 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quota"
+
+    get:
+      tags:
+        - Quotas
+      summary: List configured Quotas
+      description: List configured Quotas
+      operationId: getQuotas
+      responses:
+        "200":
+          description: Configured Quotas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Quota"
+
+  /api/quotas/{id}/:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the Quota
+      tags:
+        - Quotas
+      summary: Get a specific Quota by ID
+      description: Get a specific Quota by ID
+      operationId: getQuotaById
+      responses:
+        "200":
+          description: "Quota Retrieved"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quota"
+    patch:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the Quota
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Quota"
+      tags:
+        - Quotas
+      summary: Update a Quota
+      description: Update a Quota
+      operationId: updateQuotaById
+      responses:
+        "200":
+          description: "Quota Updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quota"
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Numeric ID of the Quota
+      tags:
+        - Quotas
+      summary: Delete a Quota
+      description: Delete Quota
+      operationId: deleteQuotaById
+      responses:
+        "201":
+          description: "Quota Deleted"
+          
 
   /api/users/names/:
     get:
@@ -879,6 +981,35 @@ components:
         "provider_type":
           type: string
           description: Provider Type
+
+    Quota:
+      type: object
+      properties:
+        "id":
+          type: number
+          description: The unique ID of the quota
+        "name":
+          type: string
+          description: A name describing the quota
+        "path":
+          type: string
+          description: The path the quota applies to
+        "soft_limit":
+          type: number
+          description: The quota soft limit in bytes
+        "hard_limit":
+          type: number
+          description: The hard limit in bytes
+        "soft_limit_inodes":
+          type: number
+          description: The soft file and directory count limit
+        "hard_limit_inodes":
+          type: number
+          description: The hard file and directory count limit
+        "create_dir":
+          type: boolean
+          description: Whether to create the path if it does not already exist
+
 
   securitySchemes:
     bearerAuth:
