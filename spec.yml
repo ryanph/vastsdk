@@ -87,11 +87,24 @@ paths:
                 $ref: "#/components/schemas/Quota"
 
     get:
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: false
+          description: Name of the quota to search for
+        - in: query
+          name: path
+          schema:
+            type: string
+          required: false
+          description: Path of the quota to search for
       tags:
         - Quotas
       summary: List configured Quotas
       description: List configured Quotas
-      operationId: getQuotas
+      operationId: listQuotas
       responses:
         "200":
           description: Configured Quotas
