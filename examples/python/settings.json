@@ -36,5 +36,22 @@
         "path": "/quota",
         "hard_limit": 50000000,
         "create_dir": true
+    },
+    "test_protectionpolicy_data": {
+        "name": "test_protectionpolicy",
+        "frames": [{
+            "every": "1D",
+            "start-at": "2020-01-01 18:00:00",
+            "keep-local": "1H",
+            "keep-remote": null
+        }],
+        "prefix": "test_protectionpolicy",
+        "clone_type": "LOCAL",
+        "indestructible": false
+    },
+    "test_protectedpath_data": {
+        "name": "test_protectedpath",
+        "source_dir": "/openapi_test_view",
+        "protection_policy_id": 0
     }
 }
