@@ -1,6 +1,6 @@
 {
   "name": "vastsdk",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "VAST Management Service (VMS) SDK - https://vastdata.com",
   "scripts": {
     "build-python": "npx @openapitools/openapi-generator-cli generate -i spec.yml -g python -o build/python/${npm_package_name} --additional-properties=\"packageVersion=${npm_package_version},packageName=${npm_package_name},projectName=${npm_package_name}\" && tar -czf build/${npm_package_name}-python-${npm_package_version}.tgz -C build/python/${npm_package_name} .",

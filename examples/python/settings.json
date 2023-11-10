@@ -3,6 +3,12 @@
     "vms_username": "admin",
     "vms_password": "123456",
     "verify_ssl": false,
+    "permission_repair_data": {
+        "target_path": "OSP/General",
+        "template_view_id": 127,
+        "template_dir_path": "General/dir_template",
+        "template_file_path": "General/file_template.txt"
+    },
     "test_query_data": {
         "username": "vastdata",
         "groupname": "AllStaffAccounts"
@@ -53,5 +59,15 @@
         "name": "test_protectedpath",
         "source_dir": "/openapi_test_view",
         "protection_policy_id": 0
+    },
+    "test_cluster_data": {
+        "audit_dir_name": ".vast_audit_dir",
+        "max_file_size": 4096000000,
+        "use_smb_privileged_user": true,
+        "smb_privileged_user_name": "automate",
+        "use_smb_privileged_group": true,
+        "smb_privileged_group_sid": "S-1-5-21-248963057-614103661-3067232799-958785",
+        "smb_administrators_group_name": "wg-vast-backup-administrators",
+        "protocols": ["S3", "SMB"]
     }
 }

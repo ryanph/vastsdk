@@ -1,8 +1,8 @@
 # VAST Management Service (VMS) SDK
 
-Vast Management Service (VMS) SDK built with [OpenAPI-Generator](https://github.com/OpenAPITools/openapi-generator).
+Vast Management Service (VMS) SDK built with [OpenAPI-Generator](https://github.com/OpenAPITools/openapi-generator). The purpose of this library is to support the creation of the Ansible Collection [ryanph.vast](https://github.com/ryanph/ansible-vast).
 
-The purpose of this library is to support the creation of an Ansible Collection. While the VAST Management Service does include a Swagger specification it is inconsistent with the actual API (return codes, request bodes and data types) preventing strict typing and integration with IDEs.
+While the VAST Management Service does include a Swagger specification it is inconsistent with the actual API (return codes, request bodes and data types) preventing strict typing and integration with IDEs. Given the purpose of the library is to support the Ansible module the specification is not intended to be general purpose and instead only contain the requirements for this module.
 
 Examples for published languages are available under [/examples](/examples/).
 
@@ -12,7 +12,7 @@ The version tag used for this project and generated libraries do not align with 
 
 ## Installing
 
-Python: `pip3 install https://github.com/ryanph/vastsdk/releases/download/v1.3.1/vastsdk-python-1.3.1.tgz`
+Python: `pip3 install https://github.com/ryanph/vastsdk/releases/download/v1.4.0/vastsdk-python-1.4.0.tgz`
 
 ## Building
 
